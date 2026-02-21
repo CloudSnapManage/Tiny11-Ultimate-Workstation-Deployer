@@ -1,61 +1,89 @@
-This is a professional **README.md** tailored for your GitHub repository. It highlights the hardware-specific optimizations for your i7/RTX 4050 build and explains the sophisticated logic of the script to potential users or employers.
-
----
-
 # 🚀 Tiny11 Ultimate Workstation Deployer
 
 An automated, hardware-aware PowerShell orchestration script designed to transform a **Tiny11** (debloated Windows) installation into a high-performance environment for **MERN Stack Development**, **AI/ML Research**, and **Gaming**.
+
+---
+
+## ⚠️ Important Disclaimer & Terms of Use
+
+**Read this carefully before proceeding:**
+
+> **Personal Use Only:** I created this script specifically for my own personal computer and workflow. While it works perfectly on my system, I am **not responsible** for any problems, data loss, or system instability that may occur on your PC.
+> **No Automatic Backups:** 🛑 **This script DOES NOT create a System Restore Point.** It is your responsibility to manually create one before execution.
+> **Use at Your Own Risk:** This script is designed for **Tiny11 / Windows 11**. It performs advanced operations, including modifying **Registry keys**, changing **Power Schemes**, and altering **System Environment Variables**.
+> **Recommendations:** > * **Review the code:** I strongly advise you to read through the script and understand each command before execution.
+> * **System Restore:** Always ensure you have a fresh **System Restore Point** or a full system backup before running any automated deployment scripts.
+> * **Manual Verification:** I am not sure if there will be problems with your specific hardware/software configuration. By running this script, you accept full responsibility for the outcome.
+> 
+> 
+
+---
 
 ## 🌟 Key Features
 
 * **Smart Hardware Detection:** Queries the system via WMI to identify CPU, NVIDIA GPU (RTX 4050), RAM, and NVMe SSD models in real-time.
 * **Size-Optimized Queue:** Implements a "Small-to-Large" installation logic. Downloads micro-utilities first to maximize early success on bandwidth-constrained connections (optimized for **5MB/s**).
-* **Concurrent Tooling:** Option to launch the **Chris Titus Tech (CTT) Windows Utility** in a separate thread to handle OS-level debloating while the main script installs software.
-* **Performance Hardening:** * Enables **Hardware Accelerated GPU Scheduling (HAGS)** via Registry.
+* **Concurrent Tooling:** Option to launch the **Chris Titus Tech (CTT) Windows Utility** in a separate thread.
+* **Performance Hardening:** * Enables **Hardware Accelerated GPU Scheduling (HAGS)**.
 * Activates the **Ultimate Performance** Power Scheme.
 * Disables `8dot3name` creation on NVMe drives for faster file I/O.
 
 
-* **Single-Folder Data Management:** Creates dedicated directories (`C:\Dev`, `C:\AI_Models`, etc.) with automatic Desktop shortcuts.
-* **Deployment Analytics:** Generates a detailed post-install report showing install duration and success/fail status for every package.
+* **Automated Verification:** Checks every installation against `$LASTEXITCODE` and logs results.
 
 ---
 
 ## 🛠 Script Architecture & Workflow
 
-The script follows a rigorous 5-Phase execution model to ensure system stability and verification.
-
-### 1. Pre-Flight Audit
-
-Scans the local Chocolatey registry to identify apps already installed, preventing redundant downloads. It verifies internet connectivity and calculates required storage space.
-
-### 2. OS Optimization
-
-Applies low-level Windows tweaks to ensure the **Intel 13th Gen i7** and **RTX 4050** are utilized to their full potential by removing power-saving bottlenecks.
-
-### 3. Orchestrated Installation
-
-Leverages the Chocolatey Package Manager. The script uses an `Update-Environment` function to refresh system PATH variables in real-time, allowing subsequent installers to recognize newly installed tools (e.g., Git, Node.js) immediately.
-
-### 4. Post-Install Verification
-
-Every installation is verified against its `$LASTEXITCODE`. Failed installations are flagged in red in the final analytics table for manual review.
-
-### 5. Final Hygiene
-
-Cleans the Chocolatey cache to reclaim multi-gigabyte storage space and provides an automated bridge to Device Manager for final driver confirmation.
+1. **Pre-Flight Audit:** Scans for existing apps to prevent redundant downloads.
+2. **OS Optimization:** Applies low-level Windows tweaks to unlock the **Intel 13th Gen i7** and **RTX 4050**.
+3. **Deployment:** Leverages Chocolatey with a real-time `Update-Environment` refresh.
+4. **Final Hygiene:** Cleans the installation cache and alerts the user with an audio notification.
 
 ---
 
-## 📋 Software Stack
+## 📦 Master Application List (44 Apps)
 
-The script automates the installation of:
+The software is installed in **Tiers** based on size to ensure the most efficient use of your 5MB/s connection.
 
-* **Drivers:** NVIDIA Display Drivers, Intel Chipset.
-* **AI:** Ollama, Stability Matrix, Anaconda.
-* **Dev:** Node.js (LTS), VS Code, MongoDB, Android Studio, OpenJDK.
-* **Creative:** Figma, GIMP, Krita, Kdenlive.
-* **Utilities:** 7-Zip, Brave, PowerToys, and more.
+### 🔹 Tier 1: Micro-Utilities (< 20MB)
+
+* **System:** 7-Zip, Everything, TreeSize Free, HWInfo, OpenSSL.
+* **Dev:** Git, Yarn.
+
+### 🔹 Tier 2: Productivity & Runtimes (20MB - 150MB)
+
+* **Media:** VLC, MPC-HC, MusicBee.
+* **Communication:** Discord, WhatsApp.
+* **Dev/Tools:** Postman, RDM (Redis), Figma, CrystalDiskMark, MSI Afterburner.
+* **System:** DirectX, VC++ Redistributables (All), WinRAR.
+
+### 🔹 Tier 3: Dev Engines & Browsers (150MB - 600MB)
+
+* **Browsers:** Brave, Google Chrome, Firefox, Chrome Canary.
+* **Dev:** VS Code, Node.js (LTS), MongoDB Compass, Ollama.
+* **Creative/Bench:** Krita, GIMP, Cinebench, Unigine Heaven.
+
+### 🔹 Tier 4: Hardware Drivers & Heavy Media (600MB - 2GB+)
+
+* **Core Drivers:** NVIDIA Display Driver, Intel Chipset Software.
+* **Media/AI:** K-Lite Codec Pack, Kdenlive, Stability Matrix (AI Art).
+* **Gaming:** Playnite, Steam, Epic Games Launcher.
+
+### 🔹 Tier 5: Massive IDEs & SDKs (3GB+)
+
+* **Development:** Anaconda3, OpenJDK 17, Android Studio, Android SDK.
+
+---
+
+## 📂 Directory Mapping
+
+The script creates the following "Single-Folder" data zones for project management:
+
+* `C:\Dev` — Source code for MERN & Android projects.
+* `C:\AI_Models` — Weights for LLMs and Diffusion models.
+* `C:\Media` — Project files for video and photo editing.
+* `C:\Games` — Game library path.
 
 ---
 
@@ -69,7 +97,7 @@ git clone https://github.com/your-username/tiny11-workstation-deployer.git
 
 
 2. **Run PowerShell as Administrator.**
-3. **Execute the script:**
+3. **Execute:**
 ```powershell
 Set-ExecutionPolicy Bypass -Scope Process -Force
 .\Ultimate_Setup.ps1
@@ -77,14 +105,17 @@ Set-ExecutionPolicy Bypass -Scope Process -Force
 ```
 
 
-4. Type `go` when prompted to begin the hardware-aware deployment.
+4. Type `go` to begin.
 
 ---
 
-## ⚠️ Disclaimer
+## 💡 Maintenance Tip
 
-This script is designed for **Tiny11/Windows 11**. It modifies registry keys and power schemes. Use at your own risk. Always ensure you have a system restore point before running automated deployment scripts.
-I made this script for my system. it works perfecty and fine, i am not sure if there will be any problems with your specific systems, so please use it on your own risk or atleast see the code first before running it.
+To update all applications installed by this script in the future, simply run:
+
+```powershell
+choco upgrade all -y
+
+```
+
 ---
-
-**Would you like me to also generate a `.gitignore` file or a specific license (like MIT) to include in your repository?**
